@@ -5,40 +5,41 @@ import java.util.Scanner;
 public class Autocorrect {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Geef een woord:");
-        String word1 = sc.nextLine().toUpperCase();
+        String w1, w2;
+        System.out.print("Geef een woord: ");
+        w1 = sc.nextLine().toUpperCase();
         System.out.print("Geef nog een woord: ");
-        String word2 = sc.nextLine().toUpperCase();
-        String[] word1Array = createArray(word1);
-        String[] word2Array = createArray(word2);
-        if (word1.length() < word2.length())
-            calculateDistance(word1Array, word2Array);
-        if (word2.length() < word1.length())
-            calculateDistance(word2Array, word1Array);
+        w2 = sc.nextLine().toUpperCase();
+
+        int distance = calculateDistance(w1, w2);
+
+        System.out.printf("De afstand tussen \"%s\" en \"%s\" is %d", w1.toLowerCase(), w2.toLowerCase(), distance);
+
     }
 
-    static String[] createArray(String s) {
-        String[] sArray = new String[s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            sArray[i] = String.valueOf(s.charAt(i));
+    static int calculateDistance(String w1, String w2) {
+        int len1 = w1.length();
+        int len2 = w2.length();
+
+        int shortest = Math.min(len1, len2);
+        int longest = Math.max(len1, len2);
+
+        int distance = 0;
+        for (int i = 0; i < shortest; i++) {
+            distance += Math.abs(w1.charAt(i) - w2.charAt(i));
         }
-        return sArray;
-    }
 
-    static String calculateDistance(String[] s1, String[] s2) {
-
-        return "test";
-    }
-
-    static char[] getCodePoints(String s) {
-        char[] array = new char[s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            String hex = String.format("%04x", (int) ch);
-            int hexToInt = Integer.parseInt(hex, 16);
-            char intToChar = (char) hexToInt;
-            array[i] = intToChar;
+        if (len1 > len2) {
+            for (int i = shortest; i < len1; i++) {
+                distance += w2.charAt(i);
+            }
+        } else {
+            for (int i = shortest; i < len2; i++) {
+                distance += w2.charAt(i);
+            }
         }
-        return array;
+        return distance;
     }
+
+
 }
