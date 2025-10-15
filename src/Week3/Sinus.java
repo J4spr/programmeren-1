@@ -6,7 +6,7 @@ public class Sinus {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int period, amp;
-        String space= " ";
+        String space = " ";
 
         System.out.print("Geef de periode: ");
         period = sc.nextInt();
@@ -17,7 +17,7 @@ public class Sinus {
         int position;
         for (int i = 0; i < period * 3; i++) {
             position = (int) (Math.sin(i * 2 * Math.PI / period) * amp + amp);
-            System.out.println(space.repeat(position)+"*");
+            System.out.printf("%s*\n", space.repeat(position));
         }
     }
 }
